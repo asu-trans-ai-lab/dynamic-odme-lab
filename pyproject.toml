@@ -19,7 +19,7 @@ classifiers = [
 dependencies = ["numpy>=1.21", "scipy>=1.7", "matplotlib>=3.4", "PyYAML>=5.4"]
 
 [project.urls]
-Source = "https://github.com/USERNAME/dynamic-odme-lab"
+Source = "https://github.com/asu-trans-ai-lab/dynamic-odme-lab"
 
 [tool.setuptools.packages.find]
 include = ["odme*"]
