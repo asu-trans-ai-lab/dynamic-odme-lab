@@ -1,15 +1,16 @@
 # Expected LOCAL paths for the private NVTA pack (git-ignored; never committed).
-# Authorized users place data here; the code reads it locally.
+# Authorized users place data here; the code reads it locally. This mirrors the layout actually used.
 private_root: "data_private/nvta"
 
 inputs:
-  network_gmns:        "data_private/nvta/network/link.csv"        # private GMNS link file (TMC, VDOT fields)
-  nodes:               "data_private/nvta/network/node.csv"
-  od_seed:             "data_private/nvta/od/od_seed.csv"          # TPB/COG-derived OD seed
-  corridor_speed:      "data_private/nvta/inrix/handoff_timedependent.csv"   # INRIX/RITIS speed (private)
-  corridor_linkflow:   "data_private/nvta/cbi/linkflow_timedependent.csv"    # CBI/FD-derived 15-min flow
-  vdot_counts:         "data_private/nvta/vdot/screenline_counts.csv"        # ACTUAL VDOT counts (magnitude)
-  tmc_identification:  "data_private/nvta/inrix/TMC_Identification.csv"       # corridor->TMC reference
+  corridor_sb_pm:      "data_private/nvta/corridor/SB_PM/"   # columns_/linkflow_timedependent.csv + network/ + crosswalk
+  corridor_nb_am:      "data_private/nvta/corridor/NB_AM/"   # same, plus od_timedependent.csv
+  qvdf_sb:             "data_private/nvta/qvdf/NVTA_SB/"      # handoff speed, daily_paq_PM/AM, Stage0_FD, qvdf params
+  qvdf_nb:             "data_private/nvta/qvdf/NVTA_NB/"
+  tmc_identification:  "data_private/nvta/tmc/TMC_Identification_{SB,NB}.csv"   # corridor->TMC reference
+  vdot_screenlines:    "data_private/nvta/vdot/screenline_obs.csv"             # ACTUAL VDOT counts (+ link_screen.csv)
+  superzone_network:   "data_private/nvta/superzone/network_am_link.csv"       # GMNS link.csv with tmc/VDOT fields
+  superzone_cache:     "data_private/nvta/superzone/cache_nvta_{pathlink,arrays}.npz, cache_nvta_odkeys.pkl"  # regenerable operator cache
 
 outputs:
   local_only: "data_private/nvta/outputs"   # generated CSVs with private link IDs stay here (git-ignored)
