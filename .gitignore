@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# ---- PRIVATE AGENCY DATA: never commit ----
+data_private/
+data/private/
+benchmarks/05_nvta*/
+benchmarks/*nvta*/
+cases/04_nvta*/
+cases/05_nvta*/
+**/*NVTA*
+**/*nvta*
+**/*VDOT*
+**/*INRIX*
+**/*RITIS*
+**/*CBI*
+**/*P4P*
+**/TMC_Identification*
+*.parquet
+*.sqlite
+
+# allow the manifest-only NVTA folder (explicitly un-ignored)
+!benchmarks/99_private_nvta_manifest_only/
+!benchmarks/99_private_nvta_manifest_only/**
+
+# heavy / generated
+*.npz
+*.pkl
+*.zip
+*.log
+reports/outputs/

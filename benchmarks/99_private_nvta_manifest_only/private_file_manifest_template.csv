@@ -1,0 +1,8 @@
+role,local_path,provenance,committed
+network_gmns_links,data_private/nvta/network/link.csv,private GMNS coding,NO
+nodes,data_private/nvta/network/node.csv,private,NO
+od_seed,data_private/nvta/od/od_seed.csv,model (TPB/COG),NO
+vdot_counts,data_private/nvta/vdot/screenline_counts.csv,measured count (VDOT),NO
+inrix_speed,data_private/nvta/inrix/handoff_timedependent.csv,measured speed (INRIX/RITIS),NO
+cbi_derived_flow,data_private/nvta/cbi/linkflow_timedependent.csv,derived (speed->FD),NO
+tmc_identification,data_private/nvta/inrix/TMC_Identification.csv,mapping reference,NO

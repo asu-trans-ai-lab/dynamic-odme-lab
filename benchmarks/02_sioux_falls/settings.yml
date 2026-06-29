@@ -1,0 +1,11 @@
+assignment:
+  number_of_iterations: 20
+  ODME_iterations: 40
+  time_start_hour: 7.0
+  time_end_hour: 8.0
+unit:
+  length_unit: mile
+  speed_unit: mph
+demand_periods:
+  - period: AM
+    time_period: 0700_0800

@@ -1,0 +1,5 @@
+link_id,t,col_idx,o_zone_id,d_zone_id,proportion,is_measured
+1,0,0,1,2,1.0,0
+2,0,0,1,2,1.0,0
+3,0,1,1,2,1.0,1
+4,0,1,1,2,1.0,0

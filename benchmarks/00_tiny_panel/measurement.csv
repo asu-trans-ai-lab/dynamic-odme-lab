@@ -1,0 +1,5 @@
+sensor_id,link_id,time_period,observed_count
+S1,2,0,70
+S1,2,1,42
+S2,4,0,80
+S2,4,1,68

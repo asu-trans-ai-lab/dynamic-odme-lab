@@ -1,0 +1,13 @@
+# Tiny reproducible ODME kernel test case
+# 3 zones, 4 nodes, 5 links, 3 OD pairs, 5 candidate paths, 2 time intervals.
+# Hand-checkable: y = M . Delta . R . d   (see odme/kernel/matrices.py)
+assignment:
+  time_start_hour: 7.0
+  time_end_hour: 8.0
+  time_interval_minutes: 30   # -> T = 2 bins (t0, t1)
+unit:
+  length_unit: mile
+  speed_unit: mph
+notes:
+  true_od_totals: {OD1: 160, OD2: 120, OD3: 100}
+  observations: 2 sensors x 2 intervals = 4  ->  6 OD-time unknowns  ->  underdetermined

@@ -1,0 +1,12 @@
+stratum,group,n,pct_rmse,ratio,status
+volume_group,0-2k,8088,83.6,1.145,PASS
+volume_group,2-5k,1897,45.0,0.968,PASS
+volume_group,5-10k,586,41.3,0.987,PASS
+volume_group,10-25k,369,29.8,0.995,PASS
+volume_group,25-50k,89,18.2,0.997,PASS
+facility,arterial,5302,57.4,1.067,
+facility,collector,3869,94.0,0.99,
+facility,expressway,34,33.5,1.0,
+facility,freeway,684,30.8,1.008,
+facility,parkway,85,54.9,1.283,
+facility,ramp,1055,52.1,0.964,

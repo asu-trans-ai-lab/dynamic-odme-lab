@@ -1,0 +1,3 @@
+* text=auto
+# No Git LFS needed: the public repo ships only small text benchmarks (< 10 MB).
+# Private agency data is never committed (see .gitignore and docs/09_private_data_policy.md).
