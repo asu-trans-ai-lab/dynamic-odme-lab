@@ -17,12 +17,12 @@ regularization, calibration & reasonableness **gates**, and **experimental** que
   origin/destination correction surface — not cell-by-cell demand reconstruction.
 - Provides **calibration** and **reasonableness** gates + a **constraint audit**.
 - Supports **one-link fluid-queue** diagnostics and a **congestion-duration gate**.
-- **Separates public benchmarks from private agency data** (NVTA is a private, local-only pack).
+- **Separates public benchmarks from private agency data** (agency packs stay local-only).
 
 ## What this repo does *not* claim (yet)
 - It does **not** provide validated full-network dynamic ODME.
 - It does **not** claim production physics-informed ODME until the congestion-duration gate passes.
-- It does **not** include any private NVTA / VDOT / INRIX / RITIS / CBI data.
+- It does **not** include any private or agency data.
 
 ## Install
 ```bash
@@ -61,14 +61,12 @@ python -m odme.cli.main v3_physics_diagnostic   # prints the resolved config (qu
 | 2 | `benchmarks/02_sioux_falls` | reproducible operator + static ODME |
 | 3 | `benchmarks/03_west_jordan_utah` | larger public network |
 | 4 | `benchmarks/04_arc_superzone` | agency-scale operator (condensed result artifacts) |
-| 5 | `benchmarks/99_private_nvta_manifest_only` | **manifest only** — private NVTA pack runs locally |
+| 5 | `benchmarks/99_private_..._manifest_only` | **manifest only** — private agency pack runs locally |
 
-## Private data policy
-NVTA / VDOT / INRIX / RITIS / CBI data are **never committed**. The public repo contains the reproducible
-kernel, teaching/public benchmarks, documentation, and expected artifact schemas; private results are
-regenerated **locally** when authorized data are present under `data_private/`. See
-[docs/09_private_data_policy.md](docs/09_private_data_policy.md) and run
-`python scripts/validate_no_private_data.py` before any commit.
+## Data policy
+No third-party or agency data is included. Any private inputs live under the git-ignored `data_private/`;
+run `python scripts/validate_no_private_data.py` before committing.
+See [docs/09_private_data_policy.md](docs/09_private_data_policy.md).
 
 ## Docs
 [reproducibility guidebook](docs/00_reproducibility_guidebook.md) ·
