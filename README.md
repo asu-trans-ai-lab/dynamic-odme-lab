@@ -37,6 +37,7 @@ python examples/run_phi_recovery.py          # recover φ(t) from link-time obse
 python examples/run_profile_mixture.py       # purpose-mixture + empirical envelope
 python examples/run_queue_one_link.py        # λ, μ(D/C), s, Q, P for one congested link (diagnostic)
 python examples/run_bounded_odme.py          # bounded ±10% low-rank OD adjustment (V0/V1/V2)
+python examples/run_observability_gate.py    # sensor-coverage gate: unobserved OD frozen at θ=1
 python examples/run_full_reproducibility_check.py
 pytest tests/
 ```
