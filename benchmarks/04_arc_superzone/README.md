@@ -6,10 +6,9 @@ matrix-free assignment operator and regularized ODME **at agency scale** (146k l
 
 ## Why this folder is condensed
 
-The full ARC inputs are **~3.7 GB** (raw `100_arc_atlanta/`: route assignment 2.0 GB, link shapefiles
-~1.1 GB, OD/link performance ~0.5 GB). That exceeds what is reasonable to host on GitHub without LFS, so
-**the network and seed demand are not distributed here.** What remains are the *result artifacts* — the
-calibration story is fully reproduced in the reports below.
+The full raw ARC inputs are **~3.7 GB** (route assignment 2.0 GB, link shapefiles ~1.1 GB, OD/link
+performance ~0.5 GB) — too large for GitHub. So this folder ships the **result artifacts** *plus* the
+**network + demand needed to reproduce the assignment**, gzipped under `network/` (~21 MB, see below).
 
 ### Shipped (result + target artifacts)
 | file | what |
@@ -22,15 +21,21 @@ calibration story is fully reproduced in the reports below.
 | `arc_observed_counts.csv`, `measurement.csv` | the 11k observed sensor-link targets |
 | `COUNTS_PREPARED.md`, `settings.csv` | how the counts were prepared + run settings |
 
-### NOT shipped (regenerate locally)
-`link.csv` (50 MB), `node.csv` (2.4 MB), `demand.csv` (13.7 MB), and the raw `100_arc_atlanta/`
-TAPLite super-zone columns. To reproduce end-to-end, place a local copy of the ARC data and point the
-scripts at it:
+### Network + demand — SHIPPED (gzipped, for end-to-end reproduction)
+The full ARC assignment inputs are now provided under **`network/`** (gzipped, ~21 MB total; largest file
+`link.csv.gz` = 14 MiB — well under GitHub limits, no LFS): `link.csv` (50 MB), `node.csv` (2.4 MB),
+`demand_sov/hov2/hov3.csv` (13.7 / 3.8 / 2.5 MB), `mode_type.csv`, `settings.csv`, and
+`arc_am_ref_volume.csv` (AM reference for validation). **See [REPRODUCE.md](REPRODUCE.md)** for the
+decompress → DTALite assignment → validation steps (reproduces correlation **0.993**, ratio **1.00** vs ARC's
+AM assignment).
+
+The only piece not shipped is the raw 2.0 GB TAPLite super-zone `route_assignment.csv` (used for the exact
+matrix-free operator); the DTALite assignment above does not need it.
 
 ```bash
-export ARC_DATA=/path/to/100_arc_atlanta      # raw network + gmns_superzone/route_assignment.csv
-python -m odme.examples.arc_odme_report        # exact-operator before/after ODME
-python -m odme.examples.arc_odme_lambda_sweep  # OD-prior λ sweep + compression comparison
+# quick start (details in REPRODUCE.md)
+cd network && gunzip -k *.gz && cp /path/to/DTALite.exe . && ./DTALite.exe && cd ..
+cp network/arc_am_ref_volume.csv . && python arc_calibration_report.py network
 ```
 
 See `../../docs/OPERATOR_COMPRESSION.md` for the matrix-free operator (A = M Δ R, never dense) and the
