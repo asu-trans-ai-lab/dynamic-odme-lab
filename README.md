@@ -13,6 +13,8 @@ regularization, calibration & reasonableness **gates**, and **experimental** que
 - Builds **matrix-free** assignment operators (`A = M·Δ·R`, never densified).
 - Recovers **time-dependent departure profiles** `φ(t)` (OD totals fixed; projected first-order solver).
 - Tests **profile-basis** and **survey/PeMS-informed** regularization and **purpose mixtures**.
+- Runs **bounded low-rank OD adjustment** (`odme.bounded`): ODME as a small ±10%, interpretable
+  origin/destination correction surface — not cell-by-cell demand reconstruction.
 - Provides **calibration** and **reasonableness** gates + a **constraint audit**.
 - Supports **one-link fluid-queue** diagnostics and a **congestion-duration gate**.
 - **Separates public benchmarks from private agency data** (NVTA is a private, local-only pack).
@@ -34,6 +36,7 @@ python examples/run_matrix_free_operator.py  # A = M·Δ·R on the public Sioux 
 python examples/run_phi_recovery.py          # recover φ(t) from link-time observations
 python examples/run_profile_mixture.py       # purpose-mixture + empirical envelope
 python examples/run_queue_one_link.py        # λ, μ(D/C), s, Q, P for one congested link (diagnostic)
+python examples/run_bounded_odme.py          # bounded ±10% low-rank OD adjustment (V0/V1/V2)
 python examples/run_full_reproducibility_check.py
 pytest tests/
 ```
@@ -72,6 +75,7 @@ regenerated **locally** when authorized data are present under `data_private/`. 
 [data dictionary](docs/02_input_data_dictionary.md) ·
 [matrix-free operator](docs/03_matrix_free_operator_guide.md) ·
 [QVDF queue physics](docs/06_qvdf_queue_physics_guide.md) ·
+[bounded low-rank ODME](docs/10_bounded_lowrank_odme.md) ·
 [private data policy](docs/09_private_data_policy.md)
 
 ## License

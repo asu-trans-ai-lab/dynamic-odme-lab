@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "dynamic-odme-lab"
-version = "0.1.0"
-description = "Reproducible dynamic ODME research kernel: matrix-free operators, departure-profile recovery, profile-basis regularization, calibration gates, and experimental queue/QVDF diagnostics."
+version = "0.2.0"
+description = "Reproducible dynamic ODME research kernel: matrix-free operators, departure-profile recovery, profile-basis regularization, bounded low-rank OD adjustment, calibration gates, and experimental queue/QVDF diagnostics."
 readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "MIT" }
