@@ -58,7 +58,7 @@ def _totals_range(d0, d, idx, n, bound):
 
 
 def bounded_lowrank_odme(matvec, rmatvec, d0, od_origin, od_dest, S, y, *, bound=0.10, rank=2,
-                         rho=8.0, rho_uv=40.0, calibrate=None, maxiter=300):
+                         rho=8.0, rho_uv=40.0, calibrate=None, maxiter=300, observable=None):
     """Bounded low-rank ODME.
 
     matvec(d)->link volumes (L,);  rmatvec(r)->OD (n_od,);  d0: base OD (n_od,);
@@ -112,6 +112,9 @@ def bounded_lowrank_odme(matvec, rmatvec, d0, od_origin, od_dest, S, y, *, bound
     clipped = 0
     if bound is not None:
         tc = np.clip(theta, 1 - bound, 1 + bound); clipped = int(np.sum(np.abs(theta - tc) > 1e-9)); theta = tc
+    # OBSERVABILITY GATE: OD pairs that cross no sensor (observable[k]==False) are NOT adjusted -> theta=1.
+    if observable is not None:
+        theta = np.where(np.asarray(observable, bool), theta, 1.0)
     d = d0 * theta
     fit = _fit(S @ A(d), y)
     pos = d0 > 0
@@ -158,3 +161,24 @@ def three_version_comparison(matvec, rmatvec, d0, od_origin, od_dest, S, y, *, b
 def _pct_out(theta, d0, bound):
     pos = d0 > 0; t = theta[pos]
     return float(100 * np.mean((t < 1 - bound - 1e-6) | (t > 1 + bound + 1e-6)))
+
+
+def observability_mask(path_link, path_od, sensor_link_cols, n_od):
+    """Per-OD sensor coverage for the observability gate (twin of the DTALite/TAPLite gate).
+
+    path_link: sparse (n_path x L) path-link incidence; path_od: (n_path,) path->OD index;
+    sensor_link_cols: iterable of link column indices that carry an observed count (sensors);
+    returns (num_sensor_points_passed (n_od,), adjustable (n_od,) bool).
+
+    RULE: an OD pair whose paths cross NO sensor point is unobservable -- it must NOT be adjusted
+    (pass the returned `adjustable` mask as `observable=` to bounded_lowrank_odme to freeze theta=1).
+    """
+    import scipy.sparse as sp
+    cols = list(sensor_link_cols)
+    sub = path_link[:, cols]
+    P = path_link.shape[0]
+    od_sel = sp.csr_matrix((np.ones(P), (np.asarray(path_od), np.arange(P))), shape=(n_od, P))
+    od_sensor = (od_sel @ sub).tocsr()
+    od_sensor.data[:] = 1.0                                   # binarize -> distinct sensor links
+    num = np.asarray(od_sensor.sum(axis=1)).ravel().astype(int)
+    return num, num > 0

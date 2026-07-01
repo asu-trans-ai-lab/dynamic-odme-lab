@@ -2,6 +2,16 @@
 
 All notable changes to `dynamic-odme-lab`.
 
+## [0.2.1] — observability gate
+### Added
+- **`odme.bounded.observability_mask(path_link, path_od, sensor_link_cols, n_od)`** — per-OD count of
+  distinct sensor links crossed + an `adjustable` mask. RULE: an OD pair whose paths cross **no** sensor
+  point is unobservable and must not be adjusted.
+- `bounded_lowrank_odme(..., observable=mask)` — freezes `theta = 1` for unobserved OD pairs (they stay at
+  seed). This is the public twin of the DTALite/TAPLite ODME **sensor-point observability gate**: only OD
+  that pass a sensor may enter the adjustment stage; total regional trips stay anchored to the base OD.
+- Test coverage for the gate (frozen OD stay at seed).
+
 ## [0.2.0] — bounded low-rank OD adjustment
 ### Added
 - **`odme.bounded`** — bounded, low-rank ODME that treats the OD adjustment as an interpretable

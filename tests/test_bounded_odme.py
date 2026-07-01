@@ -5,7 +5,8 @@ import scipy.sparse as sp
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
-from odme.bounded import bounded_lowrank_odme, three_version_comparison  # noqa: E402
+from odme.bounded import (bounded_lowrank_odme, three_version_comparison,  # noqa: E402
+                          observability_mask)
 
 
 def _case(seed=1):
@@ -51,6 +52,28 @@ def test_bounded_not_worse_than_v0_and_lowrank():
     assert v1["origin_pct_outside"] >= v2r["origin_pct_outside"]
     # adjustment is low-rank / interpretable
     assert v2r["od_explained_pct"] >= 50.0
+
+
+def test_observability_gate_freezes_unobserved_od():
+    # 3 OD pairs, 4 links; only links {0,1} are sensors. OD0 uses link0, OD1 uses link1, OD2 uses links{2,3}.
+    import scipy.sparse as sp
+    path_od = np.array([0, 1, 2])
+    rows = [0, 1, 2, 2]; cols = [0, 1, 2, 3]
+    PL = sp.csr_matrix((np.ones(len(rows)), (rows, cols)), shape=(3, 4))
+    num, adjustable = observability_mask(PL, path_od, sensor_link_cols=[0, 1], n_od=3)
+    assert list(num) == [1, 1, 0]                     # OD2 crosses no sensor
+    assert list(adjustable) == [True, True, False]
+
+    PLt = PL.T.tocsr(); share = np.ones(3); od_of = np.array([0, 1, 2]); d0 = np.array([10.0, 10.0, 10.0])
+    mv = lambda d: PLt @ (share * d[od_of])
+    def rmv(r):
+        g = np.zeros(3); np.add.at(g, od_of, share * (PL @ r)); return g
+    S = sp.csr_matrix(np.array([[1.0, 0, 0, 0], [0, 1.0, 0, 0]]))   # sensors on links 0,1
+    y = S @ mv(np.array([13.0, 7.0, 99.0]))                          # want OD0 up, OD1 down
+    res = bounded_lowrank_odme(mv, rmv, d0, np.array([0, 1, 2]), np.array([0, 1, 2]), S, y,
+                               bound=0.10, rank=0, observable=adjustable)
+    assert abs(res.theta[2] - 1.0) < 1e-9             # unobserved OD frozen at seed
+    assert res.d[2] == d0[2]
 
 
 def test_tighter_bound_changes_less():
