@@ -1,4 +1,11 @@
-# Case 09 — ARC Atlanta (CONDENSED)
+# Case — ARC Atlanta
+
+> **⚠️ Disclaimer & source.** This network + demand are a **GMNS conversion derived from the Atlanta Regional
+> Commission (ARC) regional travel model** — a **converted, research-oriented copy**, *not* an official ARC
+> product, and it may differ from ARC's released model. **ARC retains all rights.** For the authoritative
+> model/data contact the Atlanta Regional Commission (https://atlantaregional.org/); confirm ARC's terms
+> before redistribution or non-research use. Provided **as-is** for research/reproducibility. Full attribution
+> in [`../../DATA_SOURCES.md`](../../DATA_SOURCES.md).
 
 This case is the **Atlanta Regional Commission (ARC) MPO** network, used to demonstrate the
 matrix-free assignment operator and regularized ODME **at agency scale** (146k links, ~322k OD pairs,

@@ -59,9 +59,14 @@ python -m odme.cli.main v3_physics_diagnostic   # prints the resolved config (qu
 | 0 | `benchmarks/00_tiny_panel` | matrix dims, OD-path-link mapping, conservation |
 | 1 | `benchmarks/01_four_node` | TAPLite/DTALite columns + route assignment |
 | 2 | `benchmarks/02_sioux_falls` | reproducible operator + static ODME |
-| 3 | `benchmarks/03_west_jordan_utah` | larger public network |
-| 4 | `benchmarks/04_arc_superzone` | agency-scale operator (condensed result artifacts) |
-| 5 | `benchmarks/99_private_..._manifest_only` | **manifest only** — private agency pack runs locally |
+| 3 | `benchmarks/03_west_jordan_utah` | larger real network (full network + demand) |
+| 4 | `benchmarks/04_arc_superzone` | agency-scale — **full network + demand shipped** (gzipped); see REPRODUCE.md |
+| 5 | `benchmarks/05_chicago_sketch` | Chicago Sketch (~933 zones); full network + demand |
+| 6 | `benchmarks/06_chicago_regional` | Chicago Regional (~1,790 zones); full network + demand (gzipped) |
+| — | `benchmarks/99_private_..._manifest_only` | **manifest only** — private agency pack runs locally |
+
+**Data sources, attribution & disclaimers:** see [DATA_SOURCES.md](DATA_SOURCES.md) (Sioux Falls / Chicago
+from the public Transportation Networks repo; ARC is a converted research copy — ARC retains all rights).
 
 ## Data policy
 No third-party or agency data is included. Any private inputs live under the git-ignored `data_private/`;
